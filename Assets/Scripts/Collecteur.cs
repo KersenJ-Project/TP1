@@ -22,19 +22,18 @@ public class Collecteur : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D autre)
     {
         // TODO 3 : vérifier que l'objet touché est une batterie.
-        if (!autre.CompareTag("Batterie"))
+        if (!autre.CompareTag("Batterie")) return;
+
+        // TODO 4 : augmenter le compteur et afficher la progression.
+        batteriesCollectees++;
+        Debug.Log($"Batteries : {batteriesCollectees}/{objectif}");
+        // TODO 5 : détruire uniquement la batterie touchée.
+        Destroy(autre.gameObject);
+        // TODO 6 : afficher la porte lorsque l'objectif est atteint.
+        if (batteriesCollectees >= objectif)
         {
-            // TODO 4 : augmenter le compteur et afficher la progression.
-            batteriesCollectees++;
-            Debug.Log($"Batteries : {batteriesCollectees}/{objectif}");
-            // TODO 5 : détruire uniquement la batterie touchée.
-            Destroy(autre.gameObject);
-            // TODO 6 : afficher la porte lorsque l'objectif est atteint.
-            if (batteriesCollectees >= objectif)
-            {
-                Debug.Log("PORTE DÉVERROUILLÉE !");
-                porteSortie.SetActive(true);
-            }
+            Debug.Log("PORTE DÉVERROUILLÉE !");
+            porteSortie.SetActive(true);
         }
     }
 
