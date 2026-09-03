@@ -10,15 +10,32 @@ public class Collecteur : MonoBehaviour
     private void Start()
     {
         // TODO 1 : vérifier que la porte est assignée.
+        if (porteSortie == null)
+        {
+            // TODO 2 : cacher la porte au lancement du jeu.
+            Debug.LogError("La porte de sortie n'est pas assignée.");
+        }
         // TODO 2 : cacher la porte au lancement du jeu.
+        porteSortie.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D autre)
     {
         // TODO 3 : vérifier que l'objet touché est une batterie.
-        // TODO 4 : augmenter le compteur et afficher la progression.
-        // TODO 5 : détruire uniquement la batterie touchée.
-        // TODO 6 : afficher la porte lorsque l'objectif est atteint.
+        if (!autre.CompareTag("Batterie"))
+        {
+            // TODO 4 : augmenter le compteur et afficher la progression.
+            batteriesCollectees++;
+            Debug.Log($"Batteries : {batteriesCollectees}/{objectif}");
+            // TODO 5 : détruire uniquement la batterie touchée.
+            Destroy(autre.gameObject);
+            // TODO 6 : afficher la porte lorsque l'objectif est atteint.
+            if (batteriesCollectees >= objectif)
+            {
+                Debug.Log("PORTE DÉVERROUILLÉE !");
+                porteSortie.SetActive(true);
+            }
+        }
     }
 
     /*
