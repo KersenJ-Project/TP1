@@ -7,8 +7,20 @@ public class ZoneInterdite : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D autre)
     {
         // TODO 1 : vérifier que l'objet possède le tag Player.
-        // TODO 2 : vérifier que PointDepart est assigné.
-        // TODO 3 : replacer le joueur et afficher un message.
+        if (!autre.CompareTag("Player"))
+        {
+            // TODO 2 : vérifier que PointDepart est assigné.
+            if (pointDepart == null)
+            {
+                Debug.LogError("Le point de départ n'est pas assigné.");
+                return;
+            }
+            // TODO 3 : replacer le joueur et afficher un message.
+            autre.transform.position = pointDepart.position;
+            Debug.Log("Le robot retourne au point de départ.");
+            return ;
+        }
+
     }
 
     /*
