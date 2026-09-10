@@ -1,0 +1,1 @@
+Si on utilisait les même valeurs de suivi pour les 3 couches parallaxe, il n'y aurait pas d'effet de profondeur ni de mouvement car il bougeraient en simultané ce qui donne rait un arrière plan statique.

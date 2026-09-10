@@ -24,24 +24,62 @@ public class EffetDegatsJoueur : MonoBehaviour
     private void Awake()
     {
         // TODO 1 : récupérer le SpriteRenderer s'il n'est pas assigné.
+        if (renduRobot == null)
+        {
+            renduRobot = GetComponent<SpriteRenderer>();
+        }
         // TODO 2 : mémoriser la couleur et la taille initiales.
+        renduRobot.color = couleurInitiale;
         // TODO 3 : cacher le flash au lancement.
+        flashEcran.alpha = 0f;
     }
 
     public void JouerEffetDegat()
     {
         // TODO 4 : arrêter l'animation précédente, si elle existe.
+        if (animationEnCours != null)
+        {
+            StopCoroutine(animationEnCours);
+            return;
+        }
         // TODO 5 : démarrer la coroutine de dégâts.
+        animationEnCours = StartCoroutine(AnimerDegat());
     }
 
     private IEnumerator AnimerDegat()
     {
         // TODO 6 : calculer la durée d'un clignotement.
+        float dureeClignotement = dureeEffet / (nombreClignotements * 2f);
+        float progression = 0f;
+        
+
         // TODO 7 : afficher le flash.
+        flashEcran.alpha = Mathf.Lerp(0.35f, 0f, progression);
         // TODO 8 : faire clignoter et agrandir le robot.
+        if (renduRobot == null)
+        {
+            yield break;
+        }
+
+        for (int i = 0; i < nombreClignotements; i++)
+        {
+            transform.localScale = tailleInitiale * agrandissement;
+            tailleInitiale = transform.localScale;
+            renduRobot.color = couleurDegat;
+            progression += Time.deltaTime / 0.2f;
+        }
         // TODO 9 : faire disparaître progressivement le flash.
+        while (progression < 1f)
+        {
+            yield return null;
+        }
         // TODO 10 : restaurer l'apparence et terminer proprement.
-        yield break;
+        transform.localScale = tailleInitiale;
+        renduRobot.color = couleurInitiale;
+
+        animationEnCours = null;
+
+        yield return new WaitForSeconds(dureeClignotement);
     }
 
     /*
